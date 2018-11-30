@@ -1,12 +1,13 @@
 <?php
 require_once(__DIR__ . '/../loader.php');
 
-$request = json_decode(file_get_contents('php://input'));
+$request  = json_decode(file_get_contents('php://input'));
+// var_dump(json_last_error());
+// exit;
 
-if (!$request || !is_object($request) ) {
+if (!is_object($request) ) {
     http_response_code(400); exit;
 }
-
 // user
 
 $user =new stdClass();
@@ -15,7 +16,9 @@ $user->email = $request->email;
 $user->password = password_hash($request->password,PASSWORD_BCRYPT); 
 $user->status = $request->status; 
 $userID = db_insert_record('main',$user);
+
 if(!$userID){
+    echo json_encode('main');
     http_response_code(500); exit;
 }
 echo json_encode($userID);
@@ -23,14 +26,15 @@ echo json_encode($userID);
 // student
 
 if($request->status=='student'){
+    echo json_encode('stu in');
     $studentNewUser = new stdClass();
     $studentNewUser->id_stu =0;
-    $studentNewUser->main_id = $user->id;
-    $studentNewUser->email_stu = $request->email_stu;
+    $studentNewUser->main_id = $userID;
+    $studentNewUser->email_stu = $request->email;
     $studentNewUser->first_name_stu = $request->first_name_stu;
     $studentNewUser->last_name_stu = $request->last_name_stu;
     $studentNewUser->gender_stu = $request->gender_stu;
-    $studentNewUser->db_stu = $request->db_stu;
+    $studentNewUser->bd_stu = $request->db_stu;
     $studentNewUser->address = $request->address;
     $studentNewUser->lat = $request->lat;
     $studentNewUser->lon = $request->lon;
@@ -48,6 +52,7 @@ if($request->status=='student'){
 // parent
 
 if($request->status=='parent'){
+    echo json_encode('par in');
     $parentNewUser = new stdClass();
     $parentNewUser->id_par = 0 ;
     $parentNewUser->main_id = $user->id ;
@@ -68,6 +73,7 @@ if($request->status=='parent'){
 // driver
 
 if($request->status=='driver'){
+    echo json_encode('dri in');
     $driverNewUser = new stdClass();
     $driverNewUser->id_dri = 0;
     $driverNewUser->main_id = $user->id ;

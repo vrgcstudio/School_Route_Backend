@@ -17,12 +17,12 @@
  */
 
 $request = json_decode(file_get_contents('php://input'));
-if (!$request || !isset($request->username) || !isset($request->password)) {
+if (!$request || !isset($request->email) || !isset($request->password)) {
     http_response_code(400);
     exit;
 }
 
-$user = db_get_record('users', ['username' => $request->username]);
+$user = db_get_record('main', ['email' => $request->email]);
 if (!$user) {
     http_response_code(403);
     exit;
@@ -46,6 +46,7 @@ if (!db_insert_record('tokens', $tokenObj)) {
     http_response_code(500);
     exit;
 }
+
 
 unset($user->password);
 $user->token = $token;
