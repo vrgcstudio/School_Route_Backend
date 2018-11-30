@@ -1,11 +1,9 @@
 <?php
 require_once(__DIR__ . '/../loader.php');
 
-
 $request = json_decode(file_get_contents('php://input'));
 
-if(!is_object($request)){
-    echo json_encode('4');
+if (!$request || !is_object($request) ) {
     http_response_code(400); exit;
 }
 
