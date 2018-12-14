@@ -1,21 +1,5 @@
 <?php require_once(__DIR__ . '/../loader.php');
 
-/**
- * Request
- * {
- *  "username": "inwza",
- *  "password": "pass"
- * }
- * 
- * Response
- * {
- *  "id": 2,
- *  "username": "inwza",
- *  "name": "name",
- *  "token": "dsfg4dfs6g5g67s7df8g"
- * }
- */
-
 $request = json_decode(file_get_contents('php://input'));
 if (!$request || !isset($request->email) || !isset($request->password)) {
     http_response_code(400);

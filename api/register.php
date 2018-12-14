@@ -34,7 +34,7 @@ if($request->status=='student'){
     $studentNewUser->first_name_stu = $request->first_name_stu;
     $studentNewUser->last_name_stu = $request->last_name_stu;
     $studentNewUser->gender_stu = $request->gender_stu;
-    $studentNewUser->bd_stu = $request->db_stu;
+    $studentNewUser->bd_stu = $request->bd_stu;
     $studentNewUser->address = $request->address;
     $studentNewUser->lat = $request->lat;
     $studentNewUser->lon = $request->lon;
@@ -46,7 +46,7 @@ if($request->status=='student'){
     if(!$stuID){
         http_response_code(500); exit;
     }
-    echo json_encode($userID);
+    echo json_encode($stuID);
 }
 
 // parent
@@ -55,13 +55,13 @@ if($request->status=='parent'){
     echo json_encode('par in');
     $parentNewUser = new stdClass();
     $parentNewUser->id_par = 0 ;
-    $parentNewUser->main_id = $user->id ;
-    $parentNewUser->email_par = $request->email_par;
+    $parentNewUser->main_id = $userID;
+    $parentNewUser->email_par = $request->email;
     $parentNewUser->first_name_par = $request->first_name_par;
     $parentNewUser->last_name_par = $request->last_name_par;
     $parentNewUser->gender_par = $request->gender_par;
-    $parentNewUser->relation = $request->relation;
     $parentNewUser->tel_par = $request->tel_par;
+    $parentNewUser->tel_par_work = $request->tel_par_work;
     
     $parID = db_insert_record('parents',$parentNewUser);
     if(!$parID){
@@ -75,9 +75,9 @@ if($request->status=='parent'){
 if($request->status=='driver'){
     echo json_encode('dri in');
     $driverNewUser = new stdClass();
-    $driverNewUser->id_dri = 0;
-    $driverNewUser->main_id = $user->id ;
-    $driverNewUser->email_dri = $request->emaildrir;
+    $driverNewUser->id_dri = 0 ;
+    $driverNewUser->main_id = $userID;
+    $driverNewUser->email_dri = $request->email;
     $driverNewUser->first_name_dri = $request->first_name_dri;
     $driverNewUser->last_name_dri = $request->last_name_dri;
     $driverNewUser->bd_dri = $request->bd_dri;
@@ -90,23 +90,22 @@ if($request->status=='driver'){
         http_response_code(500); exit;
     }
     echo json_encode($driID);
-
+}
     // van
 
-    $van = new stdClass();
-    $van->id_van = 0;
-    $van->ownwe_van = $request->$owner_van;  
-    $van->car_number = $request->$car_number;  
-    $van->color = $request->$color;  
-    $van->seats = $request->$seats;  
-    $van->brand = $request->$brand;  
-    $van->lat = $request->$lat;  
-    $van->lon = $request->$lon;  
-    $van->detail = $request->$detail;
+    // $van = new stdClass();
+    // $van->id_van = 0;
+    // $van->owner_van = $request->$owner_van;  
+    // $van->car_number = $request->$car_number;  
+    // $van->color = $request->$color;  
+    // $van->seats = $request->$seats;  
+    // $van->brand = $request->$brand;  
+    // $van->lat = $request->$lat;  
+    // $van->lon = $request->$lon;  
+    // $van->detail = $request->$detail;
 
-    $vanID = db_insert_record('van',$van);
-    if(!$vanID){
-        http_response_code(500); exit;
-    }
-    echo json_encode($vanID);
-}
+    // $vanID = db_insert_record('vans',$van);
+    // if(!$vanID){
+    //     http_response_code(500); exit;
+    // }
+    // echo json_encode($vanID);
